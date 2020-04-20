@@ -3,7 +3,6 @@
     <p>Title: {{blog.title}}</p>
     <p>Name: {{blog.creatorName}}</p>
     <p>Email: {{blog.creatorEmail}}</p>
-    <p>Comment: {{blog.comment}}</p>
   </div>
 </template>
 

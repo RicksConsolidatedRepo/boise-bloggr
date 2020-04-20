@@ -10,6 +10,7 @@
     <div class="row">
       <div class="col-11">
         <CreateBlog></CreateBlog>
+        <CreateComment></CreateComment>
       </div>
     </div>
 

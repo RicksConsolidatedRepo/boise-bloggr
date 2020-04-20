@@ -15,6 +15,7 @@
       </div>
     </div>
     <Comment v-for="comment in comments" :commentData="comment" :key="comment._id"></Comment>
+    <CreateComment>this is where you create a comment</CreateComment>
   </div>
 </template>
 
@@ -44,7 +45,7 @@
         this.$store.dispatch("deleteBlog", this.blog._id);
       },
       editBlog() {
-        this.$store.dispatch("editBlog", this.blog);
+        this.$store.dispatch("editBlog", this.blog._id);
       }
     },
     components: {
