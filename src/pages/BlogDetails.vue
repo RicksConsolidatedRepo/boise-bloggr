@@ -1,0 +1,66 @@
+<template>
+  <div class="blog-detail">
+    <div class="row justify-content-center">
+      <div class="col-6 d-flex flex-column bg-light mt-2 pb-2">
+        <div class="row justify-content-center">
+          <div class="col-4 d-flex">
+            <img class="img-fluid img-thumbnail mt-2" :src="blog.imgUrl" />
+          </div>
+        </div>
+        <h3>{{blog.title}}</h3>
+        <p>{{blog.body}}</p>
+        <small>{{blog.creatorEmail}}</small>
+        <button class="edit btn btn sm btn-success" @click="editBlog()">Edit</button>
+        <button class="btn btn-sm btn-danger" type="button" @click="deleteBlog()">Delete</button>
+      </div>
+    </div>
+    <Comment v-for="comment in comments" :commentData="comment" :key="comment._id"></Comment>
+  </div>
+</template>
+
+
+<script>
+  import CreateComment from "../components/CreateComment";
+  import Comment from "../components/Comment";
+  export default {
+    name: "blog-details",
+    data() {
+      return {};
+    },
+    created() {
+      this.$store.dispatch("selectBlog", this.$route.params.blogId);
+    },
+    computed: {
+      blog() {
+        return this.$store.state.activeBlog.blog;
+      },
+      comments() {
+        return this.$store.state.activeBlog.comments;
+      }
+    },
+    methods: {
+      deleteBlog() {
+        this.$router.push({ name: "Home" });
+        this.$store.dispatch("deleteBlog", this.blog._id);
+      },
+      editBlog() {
+        this.$store.dispatch("editBlog", this.blog);
+      }
+    },
+    components: {
+      CreateComment,
+      Comment
+    }
+  };
+</script>
+
+
+<style scoped>
+  .edit {
+    background-color: green;
+  }
+
+  button {
+    margin-top: 0.5rem;
+  }
+</style>
