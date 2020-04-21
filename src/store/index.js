@@ -12,7 +12,9 @@ export default new Vuex.Store({
     profile: {},
     blogs: [],
     myBlogs: [],
+    myComments: [],
     activeBlog: {},
+    activeComment: {},
     comments: []
   },
   mutations: {
@@ -30,7 +32,13 @@ export default new Vuex.Store({
     },
     setComments(state, comments) {
       state.comments = comments
-    }
+    },
+    setMyComments(state, comments) {
+      state.myComments = comments;
+    },
+    setActiveComment(state, comment) {
+      state.activeComment = comment
+    },
   },
   actions: {
     setBearer({ }, bearer) {
@@ -39,6 +47,7 @@ export default new Vuex.Store({
     resetBearer() {
       api.defaults.headers.authorization = "";
     },
+
     async getProfile({
       commit
     }) {
@@ -85,6 +94,7 @@ export default new Vuex.Store({
         console.error(error);
       }
     },
+
     async addBlog({
       commit,
       dispatch
@@ -134,18 +144,6 @@ export default new Vuex.Store({
       }
     },
 
-    async addComment({
-      commit,
-      dispatch
-    }, newComment) {
-      try {
-        let res = await api.post('comments/', newComment)
-        this.dispatch('selectBlog', newComment.blogId)
-      } catch (error) {
-        console.error(error)
-      }
-    },
-
     async getComments({
       commit,
       dispatch
@@ -158,6 +156,37 @@ export default new Vuex.Store({
       }
     },
 
+    async getMyComments({ commit }) {
+      try {
+        let res = await api.get("profile/comments");
+        commit("setMyComments", res.data);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
+    async createComment({ commit }, newComment) {
+      try {
+        let res = await api.post("comments/", newComment);
+        this.dispatch("getMyComments")
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
+    async addComment({
+      commit,
+      dispatch
+    }, newComment) {
+      try {
+        let res = await api.post('comments/', newComment)
+        this.dispatch('selectComment', newComment.commentId)
+      } catch (error) {
+        console.error(error)
+      }
+    },
+
+
     async deleteComment({
       commit,
       dispatch
@@ -168,6 +197,31 @@ export default new Vuex.Store({
       } catch (error) {
         console.error(error)
       }
-    }
+    },
+
+    async editComment({
+      commit,
+      dispatch
+    }, comment) {
+      try {
+        let res = await api.put("comments/" + comment.id, comment)
+        dispatch('getComments')
+      } catch (error) {
+        console.error(error)
+      }
+    },
+
+    async selectComment({
+      commit,
+      dispatch
+    }, commentId) {
+      try {
+        let res = await api.get('comments/' + commentId)
+        console.log(res.data)
+        commit('setActiveComment', res.data)
+      } catch (error) {
+        console.error(error)
+      }
+    },
   },
 });

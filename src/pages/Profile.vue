@@ -10,15 +10,12 @@
     <div class="row">
       <div class="col-11">
         <CreateBlog></CreateBlog>
-        <CreateComment></CreateComment>
       </div>
     </div>
 
     <div class="row">
-      <blog v-for="blog in blogs" :blog="blog" :key="blog._id"></blog>
+      <Blog v-for="blog in blogs" :blog="blog" :key="blog._id"></Blog>
     </div>
-
-
   </div>
 </template>
 
@@ -37,11 +34,19 @@
       blogs() {
         return this.$store.state.myBlogs
       },
+      comment() {
+        return this.$store.state.myComments
+      },
     },
     created() {
       this.$store.dispatch("getMyBlogs");
+      this.$store.dispatch("getMyComments");
     },
-    components: { Blog, CreateBlog }
+    components: {
+      Blog,
+      CreateBlog,
+      Comment,
+    }
   };
 </script>
 

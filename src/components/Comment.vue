@@ -6,7 +6,7 @@
       <button class="btn btn-sm" @click="editComment(commentData)" data-toggle="modal" data-target="#editComments">
         <i class="fas fa-pencil-alt text-warning"></i>
       </button>
-      <EditComments id="editComment"></EditComments>
+      <EditComment id="editComment"></EditComment>
       <button class="btn btn-sm" @click="deleteComment()">
         <i class="fas fa-trash-alt text-danger"></i>
       </button>
@@ -22,10 +22,12 @@
       return {};
     },
     methods: {
+      deleteComment() {
+        this.$store.dispatch("deleteComment", this.myComment);
+      },
       editComment() {
-        console.log("deleteComment", this.commentData)
-        this.$store.dispatch("deleteComment", this.commentData);
-      }
+        this.$store.dispatch("editComment", this.myComment);
+      },
     },
     components: {}
   };

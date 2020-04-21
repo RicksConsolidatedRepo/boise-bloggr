@@ -10,11 +10,13 @@
         <h3>{{blog.title}}</h3>
         <p>{{blog.body}}</p>
         <small>{{blog.creatorEmail}}</small>
-        <button class="edit btn btn sm btn-success" @click="editBlog()">Edit</button>
+        <button class="btn btn sm btn-success" type="button" @click="editBlog()">Edit</button>
         <button class="btn btn-sm btn-danger" type="button" @click="deleteBlog()">Delete</button>
       </div>
     </div>
-    <Comment v-for="comment in comments" :commentData="comment" :key="comment._id"></Comment>
+    <div class="row">
+      <Comment v-for="comment in comments" :commentData="comment" :key="comment._id"></Comment>
+    </div>
     <CreateComment>this is where you create a comment</CreateComment>
   </div>
 </template>
@@ -57,10 +59,6 @@
 
 
 <style scoped>
-  .edit {
-    background-color: green;
-  }
-
   button {
     margin-top: 0.5rem;
   }
