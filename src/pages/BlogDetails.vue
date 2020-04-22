@@ -10,10 +10,23 @@
         <h3>{{blog.title}}</h3>
         <p>{{blog.body}}</p>
         <small>{{blog.creatorEmail}}</small>
-        <button class="btn btn sm btn-success" type="button" @click="editBlog()">Edit</button>
-        <button class="btn btn-sm btn-danger" type="button" @click="deleteBlog()">Delete</button>
+        <form class="pt-2" @submit.prevent="editBlog()">
+          <div class="form-group">
+            <label for="title">Edit Title</label>
+            <input type="text" name="title" id="" class="form-control" placeholder="edit title"
+              aria-describedby="helpId" v-model="blog.title" required>
+          </div>
+          <div class="form-group">
+            <label for="body">Edit Body</label>
+            <input type="text" name="body" id="" class="form-control" placeholder="edit body" aria-describedby="helpId"
+              v-model="blog.body" required>
+          </div>
+        </form>
+        <button type="submit" class="btn btn-sm btn-success">Save Edit</button>
+        <button type="button" class="btn btn-sm btn-danger" @click="deleteBlog()">Delete</button>
       </div>
     </div>
+
     <div class="row">
       <Comment v-for="comment in comments" :commentData="comment" :key="comment._id"></Comment>
     </div>
@@ -47,7 +60,7 @@
         this.$store.dispatch("deleteBlog", this.blog._id);
       },
       editBlog() {
-        this.$store.dispatch("editBlog", this.blog._id);
+        this.$store.dispatch("editBlog", this.blog);
       }
     },
     components: {

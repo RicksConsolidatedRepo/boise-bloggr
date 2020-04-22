@@ -42,6 +42,7 @@
       this.$store.dispatch("getMyBlogs");
       this.$store.dispatch("getMyComments");
     },
+
     components: {
       Blog,
       CreateBlog,

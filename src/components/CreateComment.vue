@@ -1,7 +1,7 @@
 <template>
   <div class="create-comment border col-12">
     <div class="form-group">
-      <label for="comment">Comment</label>
+      <label for="comment" class="text-light">Comment</label>
       <input type="text" name="comment" id="" class="form-control" placeholder="enter comment..."
         aria-describedby="helpId" v-model="newComment.body" required>
     </div>
@@ -30,7 +30,4 @@
 </script>
 
 <style>
-  .comment {
-    outline: 1px solid black;
-  }
 </style>
